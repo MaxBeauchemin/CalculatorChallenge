@@ -176,6 +176,7 @@ namespace Services
             
             var numbersStart = input.IndexOf("\n") + 1;
 
+            //If there are any matches where the custom delimiters fall inside brackets
             if (bracketDelimiterMatches.Any())
             {
                 var match = bracketDelimiterMatches.First().Value;
@@ -186,6 +187,7 @@ namespace Services
 
                 var matches = innerRegex.Matches(innerString).ToList();
 
+                //If there is only one, it will not be inside nested brackets
                 if (matches.Count == 1)
                 {
                     var m = matches.Single().Value;
@@ -194,6 +196,7 @@ namespace Services
 
                     delimiters.Add(withoutBrackets);
                 }
+                //If there are multiples, they will each be inside their own brackets
                 else if (matches.Count > 1)
                 {
                     foreach (var m in matches)
@@ -206,6 +209,7 @@ namespace Services
                     }
                 }
             }
+            //Single character without brackets
             else if (singleCharMatches.Any())
             {
                 var match = singleCharMatches.First().Value;
