@@ -8,7 +8,7 @@ namespace Services
 {
     public class Calculator
     {
-        private int _upperBound;
+        private decimal _upperBound;
         private bool _rejectNegatives;
         private string _secondaryDelimiter;
 
@@ -21,7 +21,7 @@ namespace Services
         }
 
         //Constructor with overriden config
-        public Calculator(int upperBound, bool rejectNegatives, string secondaryDelimiter)
+        public Calculator(decimal upperBound, bool rejectNegatives, string secondaryDelimiter)
         {
             _upperBound = upperBound;
             _rejectNegatives = rejectNegatives;
@@ -72,7 +72,7 @@ namespace Services
             return Calculate(input, "/");
         }
 
-        private CalculatorResponse Calculate(string input, string operatorChar)
+        public CalculatorResponse Calculate(string input, string operatorChar)
         {
             var response = new CalculatorResponse { Success = true };
 
