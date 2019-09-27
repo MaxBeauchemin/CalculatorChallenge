@@ -111,7 +111,7 @@ namespace CalculatorTests
         [TestMethod]
         public void MultipleCustomDelimitersTest()
         {
-            var input = "////[*][!!][r9r]\n11r9r22*33!!44";
+            var input = "//[*][!!][r9r]\n11r9r22*33!!44";
             var expectedOutput = 110;
 
             var output = _calculator.Sum(input);
