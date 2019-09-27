@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Services
 {
@@ -147,9 +148,63 @@ namespace Services
         {
             var delimiters = new List<string> { ",", "\n" };
 
-            //TODO: Add custom delimiters from input, adjust start index of input string to parse
+            var regexBracketDelimiters = new Regex("//\\[.*?\\]\\n");
 
-            var rawTokens = input.Split(delimiters.ToArray(), StringSplitOptions.None);
+            var regexSingleCharDelimiter = new Regex("\\/\\/.*?\\n");
+
+            var bracketDelimiterMatches = regexBracketDelimiters.Matches(input);
+
+            var singleCharMatches = regexSingleCharDelimiter.Matches(input);
+            
+            var numbersStart = input.IndexOf("\n") + 1;
+
+            if (bracketDelimiterMatches.Any())
+            {
+                var match = bracketDelimiterMatches.First().Value;
+
+                var innerString = match.Substring(2, match.Length - 3);
+
+                var innerRegex = new Regex("\\[.*?\\]");
+
+                var matches = innerRegex.Matches(innerString).ToList();
+
+                if (matches.Count == 1)
+                {
+                    var m = matches.Single().Value;
+
+                    var withoutBrackets = m.Substring(1, m.Length - 2);
+
+                    delimiters.Add(withoutBrackets);
+                }
+                else if (matches.Count > 1)
+                {
+                    foreach (var m in matches)
+                    {
+                        var matchInner = m.Value;
+
+                        var withoutBrackets = matchInner.Substring(1, matchInner.Length - 2);
+
+                        delimiters.Add(withoutBrackets);
+                    }
+                }
+            }
+            else if (singleCharMatches.Any())
+            {
+                var match = singleCharMatches.First().Value;
+
+                var innerString = match.Substring(2, match.Length - 3);
+
+                delimiters.Add(innerString);
+            }
+            else
+            {
+                //No Custom Delimiters
+                numbersStart = 0;
+            }
+
+            var inputNumbers = input.Substring(numbersStart, input.Length - numbersStart);
+
+            var rawTokens = inputNumbers.Split(delimiters.ToArray(), StringSplitOptions.None);
 
             var tokens = new List<CalculatorToken>();
 
