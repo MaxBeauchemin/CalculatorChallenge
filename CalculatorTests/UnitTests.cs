@@ -134,6 +134,54 @@ namespace CalculatorTests
             Console.WriteLine(output.Message);
         }
 
+        [TestMethod]
+        public void NegativeTestAllowed()
+        {
+            var tempCalculator = new Services.Calculator(1000, false, "\n");
+
+            var input = "40,-2,-50,AAA";
+            var expectedOutput = -12;
+
+            var output = tempCalculator.Sum(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsTrue(output.Success, output.Message);
+            Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
+        }
+
+        [TestMethod]
+        public void OverrideDelimiterTest()
+        {
+            var tempCalculator = new Services.Calculator(1000, true, "APPLE");
+
+            var input = "8APPLE16";
+            var expectedOutput = 24;
+
+            var output = tempCalculator.Sum(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsTrue(output.Success, output.Message);
+            Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
+        }
+
+        [TestMethod]
+        public void OverrideUpperBoundTest()
+        {
+            var tempCalculator = new Services.Calculator(10000, true, "\n");
+
+            var input = "9999,111,22222";
+            var expectedOutput = 10110;
+
+            var output = tempCalculator.Sum(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsTrue(output.Success, output.Message);
+            Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
+        }
+
         #endregion
 
         #region Difference()

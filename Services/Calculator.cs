@@ -8,7 +8,25 @@ namespace Services
 {
     public class Calculator
     {
-        private int _upperBound = 1000;
+        private int _upperBound;
+        private bool _rejectNegatives;
+        private string _secondaryDelimiter;
+
+        //Default Constructor
+        public Calculator()
+        {
+            _upperBound = 1000;
+            _rejectNegatives = true;
+            _secondaryDelimiter = "\n";
+        }
+
+        //Constructor with overriden config
+        public Calculator(int upperBound, bool rejectNegatives, string secondaryDelimiter)
+        {
+            _upperBound = upperBound;
+            _rejectNegatives = rejectNegatives;
+            _secondaryDelimiter = secondaryDelimiter;
+        }
 
         /// <summary>
         /// Sums up the numbers provided in the input, ignores numbers greater than the upper bound and invalid inputs
@@ -146,7 +164,7 @@ namespace Services
         /// <returns></returns>
         private List<CalculatorToken> Tokenize(string input)
         {
-            var delimiters = new List<string> { ",", "\n" };
+            var delimiters = new List<string> { ",", _secondaryDelimiter };
 
             var regexBracketDelimiters = new Regex("//\\[.*?\\]\\n");
 
@@ -222,7 +240,7 @@ namespace Services
                     token.Value = value;
 
                     //Check lower bound (error)
-                    if (value < 0)
+                    if (value < 0 && _rejectNegatives)
                     {
                         token.Errored = true;
                     }
