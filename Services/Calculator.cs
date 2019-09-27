@@ -19,21 +19,31 @@ namespace Services
         {
             var response = new CalculatorResponse { Success = true };
 
-            var tokens = Tokenize(input);
-
-            if (tokens.Any(t => t.Errored))
+            try
             {
-                response.Success = false;
+                if (input == null) throw new Exception("Null Input");
 
-                //TODO: Add valid error message for invalid tokens
-                response.Message = "ERROR";
-            }
-            else
-            {
+                var tokens = Tokenize(input);
+
+                if (tokens.Any(t => t.Errored))
+                {
+                    response.Success = false;
+
+                    var invalidTokens = tokens.Where(t => t.Errored).Select(t => t.Token);
+                    var invalidTokenString = string.Join(", ", invalidTokens);
+
+                    throw new Exception(string.Format("The following inputs were rejected: {0}", invalidTokenString));
+                }
+
                 var result = tokens.Sum(t => t.Value);
 
                 response.Value = result;
                 response.Formula = Formula(tokens, "+", result);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
             }
 
             return response;

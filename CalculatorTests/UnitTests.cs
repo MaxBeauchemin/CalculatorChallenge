@@ -122,6 +122,18 @@ namespace CalculatorTests
             Console.WriteLine(output.Formula);
         }
 
+        [TestMethod]
+        public void NegativeTest()
+        {
+            var input = "40,-2,-50,AAA";
+
+            var output = _calculator.Sum(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsFalse(output.Success, "Expected to fail since a negative number was provided");
+            Console.WriteLine(output.Message);
+        }
+
         #endregion
     }
 }
