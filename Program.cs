@@ -7,7 +7,12 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Calculator Program!");
+            Console.WriteLine("Welcome to the Calculator Program! At any time, press CTRL + C to exit");
+
+            Console.TreatControlCAsInput = false;
+            Console.CancelKeyPress += delegate {
+                System.Environment.Exit(0);
+            };
 
             var upperBoundText = UserInput("Please enter a maximum number allowed for any of the individual entries: ");
 
