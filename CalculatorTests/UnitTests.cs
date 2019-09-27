@@ -135,5 +135,59 @@ namespace CalculatorTests
         }
 
         #endregion
+
+        #region Difference()
+
+        [TestMethod]
+        public void DifferenceTest()
+        {
+            var input = "80,45";
+            var expectedOutput = 35;
+
+            var output = _calculator.Difference(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsTrue(output.Success, output.Message);
+            Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
+        }
+
+        #endregion
+
+        #region Product()
+
+        [TestMethod]
+        public void ProductTest()
+        {
+            var input = "80,45";
+            var expectedOutput = 3600;
+
+            var output = _calculator.Product(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsTrue(output.Success, output.Message);
+            Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
+        }
+
+        #endregion
+
+        #region Quotient()
+
+        [TestMethod]
+        public void QuotientTest()
+        {
+            var input = "90,15";
+            var expectedOutput = 6;
+
+            var output = _calculator.Quotient(input);
+
+            Assert.IsNotNull(output, "Output object should not be null");
+            Assert.IsTrue(output.Success, output.Message);
+            Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
+        }
+
+        #endregion
     }
 }

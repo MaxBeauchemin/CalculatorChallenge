@@ -17,6 +17,44 @@ namespace Services
         /// <returns></returns>
         public CalculatorResponse Sum(string input)
         {
+            return Calculate(input, "+");
+        }
+
+        /// <summary>
+        /// Subtracts all the following numbers from the first provided in the input, ignores numbers greater than the upper bound and invalid inputs
+        /// Default delimiters include , and linebreak, but custom delimiters can be used
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public CalculatorResponse Difference(string input)
+        {
+            return Calculate(input, "-");
+        }
+
+        /// <summary>
+        /// Multiplies all of the numbers provided in the input, ignores numbers greater than the upper bound and invalid inputs
+        /// Default delimiters include , and linebreak, but custom delimiters can be used
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public CalculatorResponse Product(string input)
+        {
+            return Calculate(input, "*");
+        }
+
+        /// <summary>
+        /// Divides the first number from the list by all of the following numbers provided in the input, ignores numbers greater than the upper bound and invalid inputs
+        /// Default delimiters include , and linebreak, but custom delimiters can be used
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public CalculatorResponse Quotient(string input)
+        {
+            return Calculate(input, "/");
+        }
+
+        private CalculatorResponse Calculate(string input, string operatorChar)
+        {
             var response = new CalculatorResponse { Success = true };
 
             try
@@ -35,10 +73,61 @@ namespace Services
                     throw new Exception(string.Format("The following inputs were rejected: {0}", invalidTokenString));
                 }
 
-                var result = tokens.Sum(t => t.Value);
+                decimal result = 0;
+
+                if (tokens.Any())
+                {
+                    switch (operatorChar)
+                    {
+                        case "+":
+                            {
+                                result = tokens.Sum(t => t.Value);
+                                break;
+                            }
+                        case "-":
+                            {
+                                result = tokens.First().Value;
+
+                                var otherTokens = tokens.Skip(1);
+
+                                foreach (var t in otherTokens)
+                                {
+                                    result -= t.Value;
+                                }
+
+                                break;
+                            }
+                        case "*":
+                            {
+                                result = tokens.First().Value;
+
+                                var otherTokens = tokens.Skip(1);
+
+                                foreach (var t in otherTokens)
+                                {
+                                    result *= t.Value;
+                                }
+
+                                break;
+                            }
+                        case "/":
+                            {
+                                result = tokens.First().Value;
+
+                                var otherTokens = tokens.Skip(1);
+
+                                foreach (var t in otherTokens)
+                                {
+                                    result /= t.Value;
+                                }
+
+                                break;
+                            }
+                    }
+                }
 
                 response.Value = result;
-                response.Formula = Formula(tokens, "+", result);
+                response.Formula = Formula(tokens, operatorChar, result);
             }
             catch (Exception ex)
             {
