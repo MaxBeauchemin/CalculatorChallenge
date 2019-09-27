@@ -10,7 +10,7 @@ namespace Services
         private int _upperBound = 1000;
 
         /// <summary>
-        /// Sums up the numbers provided in the input, ignores numbers greater than 1000 and invalid inputs
+        /// Sums up the numbers provided in the input, ignores numbers greater than the upper bound and invalid inputs
         /// Default delimiters include , and linebreak, but custom delimiters can be used
         /// </summary>
         /// <param name="input"></param>
@@ -30,7 +30,10 @@ namespace Services
             }
             else
             {
-                response.Value = tokens.Sum(t => t.Value);
+                var result = tokens.Sum(t => t.Value);
+
+                response.Value = result;
+                response.Formula = Formula(tokens, "+", result);
             }
 
             return response;
@@ -81,6 +84,26 @@ namespace Services
             }
 
             return tokens;
+        }
+
+
+        /// <summary>
+        /// Combines the tokens values with their result to show a string representation of the formula that was performed
+        /// </summary>
+        /// <param name="tokens"></param>
+        /// <param name="operatorChar"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        private string Formula(List<CalculatorToken> tokens, string operatorChar, decimal result)
+        {
+            var format = "{0} = {1}";
+
+            var tokenValues = tokens.Select(t => t.Value);
+            var operations = string.Join(string.Format(" {0} ", operatorChar), tokenValues);
+
+            var output = string.Format(format, operations, result);
+
+            return output;
         }
     }
 }

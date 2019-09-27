@@ -1,4 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace CalculatorTests
 {
@@ -20,6 +21,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -33,6 +35,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -46,6 +49,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -59,6 +63,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -72,6 +77,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -85,6 +91,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -98,6 +105,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         [TestMethod]
@@ -111,6 +119,7 @@ namespace CalculatorTests
             Assert.IsNotNull(output, "Output object should not be null");
             Assert.IsTrue(output.Success, output.Message);
             Assert.AreEqual(expectedOutput, output.Value, "Incorrect Output");
+            Console.WriteLine(output.Formula);
         }
 
         #endregion
